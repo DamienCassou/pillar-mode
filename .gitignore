@@ -1,0 +1,11 @@
+# Generated files
+*.elc
+*-pkg.el
+*.tar
+TAGS
+doc/pillar.texi
+doc/pillar.info
+
+# Packages
+.cask
+elpa
