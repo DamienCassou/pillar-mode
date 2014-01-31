@@ -5,6 +5,7 @@
 TAGS
 doc/pillar.texi
 doc/pillar.info
+flycheck_*.el
 
 # Packages
 .cask
