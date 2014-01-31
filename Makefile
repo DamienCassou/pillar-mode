@@ -39,13 +39,18 @@ $(PRECOMMIT_HOOK) :
 .PHONY: compile
 compile : $(OBJECTS)
 
-# Run ert tests.
-.PHONY: check
-check : compile
+# Run tests.
+.PHONY: unit-tests ecukes-tests check
+unit-tests : compile
 	$(CASK) exec $(EMACS) $(EMACSFLAGS)  \
 	$(patsubst %,-l % , $(SRCS))\
 	$(patsubst %,-l % , $(TESTS))\
 	-f ert-run-tests-batch-and-exit
+
+ecukes-tests : compile
+	$(CASK) exec ecukes --script
+
+check : unit-tests ecukes-tests
 
 # Export the org documentation to an info manual.
 .PHONY: info
