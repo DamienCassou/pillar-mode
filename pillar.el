@@ -3,8 +3,6 @@
 ;; Copyright (C) 2014 Damien Cassou
 
 ;; Author: Damien Cassou <damien.cassou@gmail.com>
-;; Version: 0.1
-;; Package-Requires: ((makey "0.3"))
 
 ;; This file is not part of GNU Emacs.
 
