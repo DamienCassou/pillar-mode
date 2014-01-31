@@ -18,21 +18,26 @@ Feature: Fontification
     And I insert "!Title"
     And I place the cursor between "!" and "Title"
     Then current point should be in bold
+    And current point should have the pillar-header-1-face face
 
     When I clear the buffer
     And I insert "!!Title"
     And I place the cursor between "!" and "Title"
     Then current point should be in bold
+    And current point should have the pillar-header-2-face face
 
     When I clear the buffer
     And I insert "!!!Title"
     And I place the cursor between "!" and "Title"
     Then current point should be in bold
+    And current point should have the pillar-header-3-face face
 
     When I clear the buffer
     And I insert "!!!!Title"
     And I place the cursor between "!" and "Title"
     Then current point should be in bold
+    And current point should have the pillar-header-4-face face
+
 
   Scenario: Bold test is fontified
     When I clear the buffer

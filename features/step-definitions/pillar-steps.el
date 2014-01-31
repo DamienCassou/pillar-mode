@@ -72,7 +72,7 @@
      nil
      "Expected current point to be in underline")))
 
-(Then "^current point should have the \\([-a-z]+\\) face$"
+(Then "^current point should have the \\([-1-9a-z]+\\) face$"
   (lambda (face)
     (pillar-steps::fontify)
     (cl-assert
