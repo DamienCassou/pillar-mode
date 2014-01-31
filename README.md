@@ -1,5 +1,7 @@
 # pillar
 
+[![Build Status](https://travis-ci.org/DamienCassou/pillar-mode.png?branch=master)](https://travis-ci.org/DamienCassou/pillar-mode)
+
 ## Summary
 
 Major mode for editing Pillar files
