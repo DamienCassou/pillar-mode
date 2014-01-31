@@ -89,6 +89,10 @@ The value of the face PROPERTY must be one of VALID-VALUES."
      (null (pillar-steps::faces-at-point)))
     nil))
 
+(And "^I delete other windows$"
+  (lambda ()
+    (delete-other-windows)))
+
 ;; Local Variables:
 ;; eval: (flycheck-mode -1)
 ;; End:
