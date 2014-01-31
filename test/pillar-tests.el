@@ -29,4 +29,11 @@
 
 (provide 'pillar-tests)
 
+(ert-deftest failing-test ()
+    (should t))
+
 ;;; pillar-tests.el ends here
+
+;; Local Variables:
+;; eval: (flycheck-mode -1)
+;; End:
