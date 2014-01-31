@@ -11,7 +11,7 @@ Feature: Fontification
   Scenario: Standard text is not fontified
     When I insert "Some text"
     And I place the cursor between "t" and "e"
-    Then current point should not be in bold
+    Then current point should have no face
 
   Scenario: Titles are fontified
     When I clear the buffer

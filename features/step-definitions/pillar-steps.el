@@ -29,13 +29,6 @@
      nil
      "Expected current point to be in bold")))
 
-(Then "current point should not be in bold"
-  (lambda ()
-    (cl-assert
-     (not  (pillar-steps::character-bold-p))
-     nil
-     "Expected current point to be in bold")))
-
 (Then "current point should be in italic"
   (lambda ()
     (cl-assert
@@ -79,6 +72,13 @@
      (cl-member
       (intern face)
       (pillar-steps::faces-at-point)))
+    nil))
+
+(Then "^current point should have no face$"
+  (lambda ()
+    (pillar-steps::fontify)
+    (cl-assert
+     (null (pillar-steps::faces-at-point)))
     nil))
 
 (When "^I start pillar mode$"
