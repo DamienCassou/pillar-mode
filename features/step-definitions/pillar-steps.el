@@ -89,10 +89,6 @@ The value of the face PROPERTY must be one of VALID-VALUES."
      (null (pillar-steps::faces-at-point)))
     nil))
 
-(When "^I start pillar mode$"
-  (lambda ()
-    (pillar-mode)))
-
 ;; Local Variables:
 ;; eval: (flycheck-mode -1)
 ;; End:

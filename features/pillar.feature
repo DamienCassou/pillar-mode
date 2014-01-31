@@ -6,7 +6,7 @@ Feature: Fontification
   Background:
     Given I am in buffer "foo.pillar"
     And I clear the buffer
-    And I start pillar mode
+    And I turn on pillar-mode
 
   Scenario: Standard text is not fontified
     When I insert "Some text"
