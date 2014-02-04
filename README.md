@@ -17,7 +17,3 @@ build the project.
 ## Contributing
 
 Yes, please do! See CONTRIBUTING.md for guidelines.
-
-## License
-
-See COPYING. Copyright (c) 2014 Damien Cassou.

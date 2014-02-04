@@ -5,7 +5,6 @@
 (depends-on "makey")
 
 (development
- (depends-on "org-plus-contrib")
  (depends-on "ert")
  (depends-on "cl-lib")
  (depends-on "ecukes")
