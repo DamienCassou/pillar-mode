@@ -73,7 +73,7 @@ The value of the face PROPERTY must be one of VALID-VALUES."
      nil
      "Expected current point to be in underline")))
 
-(Then "^current point should have the \\([-1-9a-z]+\\) face$"
+(Then "^current point should have the \\([-[:alnum:]]+\\) face$"
   (lambda (face)
     (pillar-steps::fontify)
     (cl-assert
