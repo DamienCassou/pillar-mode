@@ -1,8 +1,7 @@
 (source melpa)
 (source org)
 
-(package "pillar" "0.1" "Major mode for editing Pillar files.")
-(depends-on "makey")
+(package-file "pillar.el")
 
 (development
  (depends-on "ert")

@@ -3,7 +3,11 @@
 ;; Copyright (C) 2014 Damien Cassou
 
 ;; Author: Damien Cassou <damien.cassou@gmail.com>
-
+;; Version: 0.1
+;; Package-Requires: ((makey "0.3"))
+;; Keywords: markup major-mode
+;; URL: http://github.com/DamienCassou/pillar-mode
+;;
 ;; This file is not part of GNU Emacs.
 
 ;; This program is free software: you can redistribute it and/or modify
