@@ -1,4 +1,4 @@
-;;; pillar.el --- Major mode for editing Pillar files
+;;; pillar.el --- Major mode for editing Pillar files  -*- lexical-binding: t; -*-
 
 ;; Copyright (C) 2014 Damien Cassou
 
@@ -32,6 +32,8 @@
 (require 'makey) ;; for popup handling
 (require 'regexp-opt)
 
+(require 'cl-lib)
+
 (defgroup pillar nil
   "Major mode for editing text files in Pillar format."
   :prefix "pillar-"
@@ -59,38 +61,42 @@ Return a new regex."
    t ;; don't interpret replacement string as a regex
    ))
 
-(defmacro pillar-defformat (name &optional face-spec regex regex-group)
+(defmacro pillar-defformat (name face-spec &optional regex regex-group)
   "Generate necessary vars and faces for face NAME.
 NAME is the name of the specific face to create without prefix or
 suffix (e.g., bold).  FACE-SPEC is passed unchanged to `defface'.
-REGEX is the regular expression used to match text for this face.
 
-Optional argument REGEX-GROUP indicates which group in REGEX
-represents the matched text."
-  (let ((face-name (intern (format "pillar-%s-face" `,name)))
+Optional argument REGEX is the regular expression used to match
+text for this face.  Optional argument REGEX-GROUP indicates which
+group in REGEX represents the matched text."
+  (unless (symbolp name) (error "NAME must be a symbol"))
+  (let ((face-spec-gen (cl-gensym))
+        (regex-gen (cl-gensym))
+        (regex-group-gen (cl-gensym))
+        (face-name (intern (format "pillar-%s-face" `,name)))
         (regex-name (intern (format "pillar-regex-%s" `,name))))
-    `(progn
-       ;; Save face specification to dedicated variable
+    `(let ((,face-spec-gen ,face-spec)
+           (,regex-gen ,regex)
+           (,regex-group-gen ,regex-group))
+       ;; Save face specification to a dedicated variable
        (defvar ,face-name ',face-name
          ,(format "Face name to use for %s text." name))
-       ;; Save face specification to dedicated face
-       ,(when face-spec
-          `(defface ,face-name
-             ,face-spec
-             ,(format "Face for %s text." name)
-             :group 'pillar-faces))
-       ;; Save regexp to dedicated variable
-       ,(when regex
-          `(defconst ,regex-name
-             ,(list 'pillar-preprocess-regex regex)
-             ,(format "Regular expression for matching %s text." name)))
-       ;; Associates regex with face name for syntax highlighting:
-       ,(when (and face-spec regex)
-          `(add-to-list 'pillar-font-lock-keywords
-                        (cons ,regex-name
-                              ',(if regex-group
-                                   (list regex-group face-name)
-                                 face-name)))))))
+       ;; Save face specification to a dedicated face
+       (defface ,face-name
+         ,face-spec-gen
+         ,(format "Face for %s text." name)
+         :group 'pillar-faces)
+       ;; Save regexp to a dedicated variable
+       (when ,regex-gen
+         (defconst ,regex-name
+           (pillar-preprocess-regex ,regex-gen)
+           ,(format "Regular expression for matching %s text." name))
+         ;; Associates regex with face name for syntax highlighting:
+         (add-to-list 'pillar-font-lock-keywords
+                      (cons ,regex-name
+                            (if ,regex-group-gen
+                                (list ,regex-group-gen ,face-name)
+                              ,face-name)))))))
 
 (defmacro pillar-defformat-special-text (name face-spec markup key)
   "Same as `pillar-defformat` with special treatment and shortcuts.
@@ -99,16 +105,18 @@ name of the specific face to create without prefix or
 suffix (e.g., bold).  FACE-SPEC is passed unchanged to `defface'.
 MARKUP is the regular expression to be found before and after
 text for this face.  KEY is the assigned shortcut key."
-  (let ((insert-markup-fn-name (intern (format "pillar-insert-%s-markup" name))))
-    `(progn
+  (unless (symbolp name) (error "NAME must be a symbol"))
+  (let ((markup-gen (cl-gensym))
+        (insert-markup-fn-name (intern (format "pillar-insert-%s-markup" name))))
+    `(let ((,markup-gen ,markup))
        (pillar-defformat
         ,name
         '((t ,(append '(:inherit pillar-special-text-face) face-spec)))
-        ,(concat "[^\\]\\(" (regexp-quote markup) ".*?[^\\]" (regexp-quote markup) "\\)")
+        (concat "[^\\]\\(" (regexp-quote ,markup-gen) ".*?[^\\]" (regexp-quote ,markup-gen) "\\)")
         1)
        (defun ,insert-markup-fn-name ()
          (interactive)
-         (pillar-insert-special-text-markup ,markup))
+         (pillar-insert-special-text-markup ,markup-gen))
        (add-to-list 'pillar-key-mode-special-font-actions
                     '(,(format "%c" key)
                       ,(capitalize (format "%s" name))
