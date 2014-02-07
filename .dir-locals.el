@@ -1,10 +1,13 @@
 ;;; Directory Local Variables
-;;; See Info node `(emacs) Directory Variables' for more information.
+;;; For more information see (info "(emacs) Directory Variables")
 
 ((emacs-lisp-mode
+  (colon-double-space . t)
   (sentence-end-double-space . t)
   (eval flycheck-mode)
   (eval checkdoc-minor-mode)))
+
+
 
 ;; Local Variables:
 ;; mode: fundamental
