@@ -73,8 +73,8 @@ group in REGEX represents the matched text."
   (let ((face-spec-gen (cl-gensym))
         (regex-gen (cl-gensym))
         (regex-group-gen (cl-gensym))
-        (face-name (intern (format "pillar-%s-face" `,name)))
-        (regex-name (intern (format "pillar-regex-%s" `,name))))
+        (face-name (intern (format "pillar-%S-face" name)))
+        (regex-name (intern (format "pillar-regex-%S" name))))
     `(let ((,face-spec-gen ,face-spec)
            (,regex-gen ,regex)
            (,regex-group-gen ,regex-group))
@@ -107,7 +107,7 @@ MARKUP is the regular expression to be found before and after
 text for this face.  KEY is the assigned shortcut key."
   (unless (symbolp name) (error "NAME must be a symbol"))
   (let ((markup-gen (cl-gensym))
-        (insert-markup-fn-name (intern (format "pillar-insert-%s-markup" name))))
+        (insert-markup-fn-name (intern (format "pillar-insert-%S-markup" name))))
     `(let ((,markup-gen ,markup))
        (pillar-defformat
         ,name
